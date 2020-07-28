@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <form action="#">
+        <label for="name" class="title">Имя</label>
+        <input type="text" name="name" placeholder="Имя">
+        <label for="name" name="name-error" class='error hide'>Имя содержит только буквы!</label>
+
+        <label for="phone" class="title">Телефон</label>
+        <input type="text" name="phone" placeholder="+7(000)000-0000">
+        <label for="phone" name="phone-error" class='error hide'>Телефон имеет вид +7(000)000-0000!</label>  
+        
+        <label for="email" class="title">E-mail</label>
+        <input type="email" name="email" placeholder="Email">
+        <label for="name" name="email-error" class='error hide'>E-mail имеет вид mymail@mail.ru, или my.mail@mail.ru, или my-mail@mail.ru!</label>  
+
+        <label for="message" class="title">Сообщение</label>
+        <textarea name="message" cols="30" rows="10" placeholder="Текст сообщения"></textarea>
+        <label for="message" name="message-error" class='error hide'>Сообщение не может быть пустым!</label>
+
+        <button>Отправить</button>
+    </form>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

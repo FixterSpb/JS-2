@@ -3,7 +3,6 @@
 const regExpName = /[a-zа-яё]+/i;
 const regExpPhone = /\+7\(\d{3}\)\d{3}-\d{4}/;
 const regExpEmail = /[a-z]+[a-z0-9]+\.?-?[a-z0-9]+@[a-z]+\.[a-z]+/i;
-const regExpMessage = /[а-яё\w\s|\n]+/im;
 
 document.querySelectorAll('input').forEach(element => 
     element.addEventListener('change', event => {

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+</head>
+<body>
+    <script>
+        class Parent {
+            constructor(){
+                this.#privateMethod();
+            }
+
+            #privateMethod(){
+                alert("Это метод родителя");
+            }
+        }
+
+        class Child extends Parent{
+            constructor() {
+                super();
+            }
+
+            #privateMethod(){
+                alert("Это метод потомка");
+            }
+        }
+
+        const child = new Child();
+    </script>
+</body>
+</html>

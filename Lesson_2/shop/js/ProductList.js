@@ -39,7 +39,7 @@ class ProductList {
       }
     }
 
-    goodsList(){
+    getTotal(){
         let total = 0;
         for (let item of this.goods){
             total += item.price;

@@ -18,13 +18,13 @@ Two: 'I'll see you next time.'
 One: 'Sure.' Bye.'`;
 
 const replace = ((str) => {
-    let result;
-    let resStr = str.replace(/'/g, '"');
-    let regExp = /\w"\w/g;
-    while (result = regExp.exec(resStr)){
-        resStr = resStr.replace(result[0], result[0].replace('"', "'"));
-    }
-    return resStr;
+    return str.replace(/'/g, (subStr, pos) => {
+        if (/\w/.test(str[pos - 1]) && /\w/.test(str[pos + 1])){
+            return '\'';
+        }else{
+            return '\"';
+        }
+    });
 });
 
 console.log(replace(str));

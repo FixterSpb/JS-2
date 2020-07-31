@@ -50,16 +50,8 @@ const app = new Vue({
       this.cart.splice(this.cart.indexOf(product), 1);
     },
 
-    filterGoods(){
-
-      const regExp = new RegExp(this.searchLine, "i");
-      document.querySelectorAll('.product-item').forEach(element => {
-        if (regExp.test(element.querySelector("h3").textContent)){
-          element.classList.remove("invisible");
-        }else{
-          element.classList.add("invisible");
-        }
-      });
+    filterGoods(product){
+      return (new RegExp(this.searchLine, "i")).test(product.product_name);
     }
   },
   beforeCreate() {

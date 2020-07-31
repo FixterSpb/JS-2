@@ -19,7 +19,7 @@
                 </button>
             </div>
             <button class="btn-cart" type="button" @click="isVisibleCart = !isVisibleCart">Корзина</button>
-            <div class="cart-block" :class="{'' :isVisibleCart, invisible: !isVisibleCart}">
+            <div class="cart-block" :class="{invisible: !isVisibleCart}">
                 <h3 v-if="cart.length === 0">Корзина пока пуста</h3>
                 <div class="cart-item"  v-for="product of cart" :key="'cart-'+product.id">
                     <div class="product-bio">
@@ -47,7 +47,7 @@
     </header>
     <main>
         <div class="products">
-            <div class="product-item" v-for="product of products" :key="product.id_product">
+            <div class="product-item" v-for="product of products" :key="product.id_product" :class="{invisible: !filterGoods(product)}">
                 <img :src="imgCatalog" alt="Some img">
                 <div class="desc">
                     <h3>{{product.product_name}}</h3>

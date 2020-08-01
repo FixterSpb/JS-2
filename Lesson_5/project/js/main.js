@@ -8,6 +8,7 @@ const app = new Vue({
     imgCatalog: 'https://placehold.it/200x150',
 
     searchLine: "",
+
     cart: [],
     isVisibleCart: false,
     imgCart: 'https://placehold.it/50x100',

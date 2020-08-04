@@ -21,16 +21,15 @@
             <button class="btn-cart" type="button" @click="isVisibleCart = !isVisibleCart">Корзина</button>
             <div class="cart-block" :class="{invisible: !isVisibleCart}">
                 <h3 v-if="cart.length === 0">Корзина пока пуста</h3>
-                <div class="cart-item"  v-for="product of cart" :key="'cart-'+product.id">
+                <div class="cart-item"  v-for="product of cart" :key="'cart-'+product.id_product">
                     <div class="product-bio">
                         <img :src="imgCart" alt="Some img">
                         <div class="product-desc">
                             <p class="product-title">{{ product.name }}</p>
                             <p class="product-quantity">Количество:<br>
-                                <button v-if="product.quantity > 1"  @click="product.quantity--">-</button>
-                                <button v-else @click="removeProductOfCart(product)">-</button>
-                                {{ product.quantity }}
-                                <button @click="product.quantity++">+</button>
+                                <button @click="decreaseProductOfCart(product)">-</button>
+                                    {{ product.quantity }}
+                                <button @click="increaseProductOfCart(product)">+</button>
 
                             </p>
                             <p class="product-single-price">{{ product.price }} за ед.</p>

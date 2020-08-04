@@ -21,22 +21,16 @@ const app = new Vue({
             console.log(error);
           })
     },
-    addProduct(product) {
-      const indexOfCart = this._getIndexOfCart(product);
-      if ( indexOfCart === -1){
-          this.cart.push({id: product.id_product, name: product.product_name, price: product.price, quantity: 1});
-      }else{
-          this.cart[indexOfCart].quantity++;
-      }
-    },
 
-    _getIndexOfCart(product){
-      for (let i = 0; i < this.cart.length; i++){
-        if (this.cart[i].id === product.id_product){
-          return i;
-        }
+    addProduct(product){
+      const productOfCart = this.cart.find(el =>  el.id_product === product.id_product);
+
+      if (productOfCart){
+        productOfCart.quantity++;
+      }else{
+        const prod = Object.assign({quantity: 1}, product);
+        this.cart.push(prod);
       }
-      return -1;
     },
 
     getTotalPrice(){
@@ -49,6 +43,18 @@ const app = new Vue({
 
     removeProductOfCart(product){
       this.cart.splice(this.cart.indexOf(product), 1);
+    },
+
+    decreaseProductOfCart(product){
+      if (product.quantity !== 1){
+        product.quantity--;
+      }else{
+        this.removeProductOfCart(product);
+      }
+    },
+
+    increaseProductOfCart(product){
+      product.quantity++;
     },
 
     filterGoods(product){

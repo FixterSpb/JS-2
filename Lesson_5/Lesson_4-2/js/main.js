@@ -18,6 +18,7 @@ Two: 'I'll see you next time.'
 One: 'Sure.' Bye.'`;
 
 const replace = ((str) => {
+    /*
     return str.replace(/'/g, (subStr, pos) => {
         if (/\w/.test(str[pos - 1]) && /\w/.test(str[pos + 1])){
             return '\'';
@@ -25,6 +26,9 @@ const replace = ((str) => {
             return '\"';
         }
     });
+     */
+    //Метод, реализованный преподавателем:
+    return str.replace(/\B'|'\B/g, '"');
 });
 
 console.log(replace(str));

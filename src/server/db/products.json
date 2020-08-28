@@ -1,0 +1,74 @@
+[
+  {
+    "id": 10,
+    "name": "MANGO PEOPLE T-SHIRT",
+    "price": 52.00,
+    "img": "img/product_middle_10.png",
+    "stars": 4.5,
+    "for": "men"
+  },
+  {
+    "id": 11,
+    "name": "MANGO PEOPLE T-SHIRT",
+    "price": 52.00,
+    "img": "img/product_middle_211.png",
+    "stars": 4.5,
+    "for": "men"
+  },
+  {
+    "id": 3,
+    "name": "MANGO PEOPLE T-SHIRT",
+    "price": 52.00,
+    "img": "img/product_middle_3.png",
+    "stars": 4.5,
+    "for": "men"
+  },
+  {
+    "id": 12,
+    "name": "MANGO PEOPLE T-SHIRT",
+    "price": 52.00,
+    "img": "img/product_middle_12.png",
+    "stars": 4.5,
+    "for": "men"
+  },
+  {
+    "id": 13,
+    "name": "MANGO PEOPLE T-SHIRT",
+    "price": 52.00,
+    "img": "img/product_middle_13.png",
+    "stars": 4.5,
+    "for": "men"
+  },
+  {
+    "id": 14,
+    "name": "MANGO PEOPLE T-SHIRT",
+    "price": 52.00,
+    "img": "img/product_middle_14.png",
+    "stars": 4.5,
+    "for": "men"
+  },
+  {
+    "id": 15,
+    "name": "MANGO PEOPLE T-SHIRT",
+    "price": 52.00,
+    "img": "img/product_middle_15.png",
+    "stars": 4.5,
+    "for": "men"
+  },
+  {
+    "id": 16,
+    "name": "MANGO PEOPLE T-SHIRT",
+    "price": 52.00,
+    "img": "img/product_middle_16.png",
+    "stars": 4.5,
+    "for": "men"
+  },
+  {
+    "id": 17,
+    "name": "MANGO PEOPLE T-SHIRT",
+    "price": 52.00,
+    "img": "img/product_middle_17.png",
+    "stars": 4.5,
+    "for": "men"
+  }
+]

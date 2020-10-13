@@ -1,12 +1,13 @@
 const express = require("express");
 const fs = require("fs");
 const app = express();
+const path = require("path");
 
 app.use(express.json());
-app.use('/', express.static('./public/'));
+app.use('/', express.static(path.resolve(__dirname, '../public')));
 
 app.get('/api/products_main', (req, res) => {
-    fs.readFile('./server/db/products_main.json', 'utf-8', (err, data) => {
+    fs.readFile(path.resolve(__dirname, './db/products_main.json'), 'utf-8', (err, data) => {
         if (err) {
             res.send(JSON.stringify({result: 0, text: err}))
         }else{
@@ -59,5 +60,3 @@ app.listen(port, () => {
 //         })
 //     }
 // });
-
-// server.listen(5555);

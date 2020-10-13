@@ -1,5 +1,2 @@
+shop/node_modules/
 .idea/
-
-node_modules/
-
-src/public/checkout.php

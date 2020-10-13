@@ -1,6 +1,6 @@
-// import products_main from 'Products_main.js';
+import products_main from './Products_main';
 
-const appMain = {
+const app = {
     el: "#app",
     components: {
         products_main,
@@ -17,6 +17,4 @@ const appMain = {
     }
 }
 
-const app = new Vue(appMain);
-
-// export default app;
+export default app;

@@ -1,4 +1,4 @@
-const product_main = {
+const productItem = {
     props: ['product'],
     data() {
         return {
@@ -42,7 +42,7 @@ const product_main = {
 };
 
 const products_main = {
-    components: {product_main},
+    components: {productItem},
     data() {
         return {
             products: [],
@@ -69,10 +69,10 @@ const products_main = {
                         </p>
                     </div>
                     <div class="product_box">
-                        <product_main v-for="item of products" :key="item.id" :product="item"></product_main>
+                        <productItem v-for="item of products" :key="item.id" :product="item"></productItem>
                     </div>
                 </section>`
 };
 
-// export default products_main;
+export default products_main;
 

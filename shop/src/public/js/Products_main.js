@@ -7,23 +7,12 @@ const productItem = {
             starO: Math.trunc(5 - this.product.stars),
         }
     },
-
-    mounted(){
-        console.log({
-            id: this.product.id,
-            stars: this.product.stars,
-            star: this.star,
-            starHalf: this.starHalf,
-            starO: this.starO
-        })
-    },
-
     template: `<div class="product">
                     <a href="single.html" class="product_link">
                         <img :src="product.img" alt="Some img" class="product_middle_img">
                     </a>
                     <div class="product_content">
-                        <a href="single.html" class="product_name_link link_hover">Mango People T-shirt</a>
+                        <a href="single.html" class="product_name_link link_hover">{{ product.name }}</a>
                         <div class="jc-sb top16">
                             <p class="product_price">&dollar; {{ product.price }}</p>
                             <p>{{product.stars}}</p>

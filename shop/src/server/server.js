@@ -14,6 +14,16 @@ app.get('/api/products_main', (req, res) => {
             res.send(data);
         }
     });
+});
+
+app.get('/api/cart', (req, res) =>{
+    fs.readFile(path.resolve(__dirname, './db/cart.json'), 'utf-8', (err, data) => {
+        if (err) {
+            res.send(JSON.stringify({result: 0, text: err}))
+        }else{
+            res.send(data);
+        }
+    });
 })
 
 

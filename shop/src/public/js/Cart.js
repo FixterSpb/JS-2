@@ -29,35 +29,64 @@ const cart = {
     components: {cartItem},
     data() {
         return {
+            amount: 0,
+            countGoods: 0,
             products: [],
         }
     },
 
     methods: {
-      addProduct(product) {
-          console.log(product);
-      }
+        addProduct(product) {
+            console.log(product);
+            let find = this.products.find(el => el.id === product.id);
+            if (find){
+                this.$parent.putJSON(`api/cart/${find.id}`, {quantity: 1});
+                find.quantity++;
+            }else{
+                let prod = Object.assign({quantity: 1}, product);
+                this.$parent.postJSON(`api/cart/`, prod)
+                    .then(data => {
+                        if (data.result === 1){
+                            this.$parent.getJSON("/api/cart");
+                        }
+                    });
+            };
+        },
+
+        deleteProduct(product){
+
+        }
     },
 
     mounted() {
         this.$parent.getJSON("/api/cart")
             .then(data => {
-                for (let item of data){
+                this.amount = data.amount;
+                this.countGoods = data.countGoods;
+                for (let item of data.products){
                     this.products.push(item);
                 }
             })
     },
 
     template:
-        `<div class="column_box drop">
+        `<div>
+        <div class="count_products" v-if="countGoods>0">
+            <p>{{ countGoods }}</p>
+        </div>
+        <a href="shopping-cart.html" class="cart_link">
+            <img src="img/cart.png" alt="cart" class="cart_img">
+        </a>
+       <div class="column_box drop">
             <cartItem v-for="item of products" :key="item.id" :product="item"></cartItem>
             <div class="cart_total_box">
                 <h3 class="cart_total">TOTAL</h3>
-                <h3 class="cart_total">$500.00</h3>
+                <h3 class="cart_total">&dollar;{{ amount }}</h3>
             </div>
-            <a href="#" class="button_drop_cart">Checkout</a>
-            <a href="#" class="button_drop_cart">Go to cart</a>
-         </div>`
+            <button class="button_drop_cart">Checkout</button>
+            <button class="button_drop_cart">Go to cart</button>
+     </div>
+    </div>`
 };
 
 export default cart;

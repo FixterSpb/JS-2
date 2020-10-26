@@ -2,9 +2,11 @@ const express = require("express");
 const fs = require("fs");
 const app = express();
 const path = require("path");
+const cartRouter = require("./CartRouter");
 
 app.use(express.json());
 app.use('/', express.static(path.resolve(__dirname, '../public')));
+app.use('/api/cart', cartRouter);
 
 app.get('/api/products_main', (req, res) => {
     fs.readFile(path.resolve(__dirname, './db/products_main.json'), 'utf-8', (err, data) => {
@@ -16,6 +18,8 @@ app.get('/api/products_main', (req, res) => {
     });
 });
 
+
+/*
 app.get('/api/cart', (req, res) =>{
     fs.readFile(path.resolve(__dirname, './db/cart.json'), 'utf-8', (err, data) => {
         if (err) {
@@ -25,7 +29,7 @@ app.get('/api/cart', (req, res) =>{
         }
     });
 })
-
+*/
 
 const port = process.env.PORT || 5555;
 

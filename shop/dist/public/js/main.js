@@ -11225,21 +11225,55 @@ var cart = {
   },
   data: function data() {
     return {
+      amount: 0,
+      countGoods: 0,
       products: []
     };
   },
+  methods: {
+    addProduct: function addProduct(product) {
+      var _this = this;
+
+      console.log(product);
+      var find = this.products.find(function (el) {
+        return el.id === product.id;
+      });
+
+      if (find) {
+        this.$parent.putJSON("api/cart/".concat(find.id), {
+          quantity: 1
+        });
+        find.quantity++;
+      } else {
+        var prod = Object.assign({
+          quantity: 1
+        }, product);
+        this.$parent.postJSON("api/cart/", prod).then(function (data) {
+          if (data.result === 1) {
+            _this.$parent.getJSON("/api/cart");
+          }
+        });
+      }
+
+      ;
+    },
+    deleteProduct: function deleteProduct(product) {}
+  },
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
     this.$parent.getJSON("/api/cart").then(function (data) {
-      var _iterator = _createForOfIteratorHelper(data),
+      _this2.amount = data.amount;
+      _this2.countGoods = data.countGoods;
+
+      var _iterator = _createForOfIteratorHelper(data.products),
           _step;
 
       try {
         for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var item = _step.value;
 
-          _this.products.push(item);
+          _this2.products.push(item);
         }
       } catch (err) {
         _iterator.e(err);
@@ -11248,7 +11282,7 @@ var cart = {
       }
     });
   },
-  template: "<div class=\"column_box drop\">\n            <cartItem v-for=\"item of products\" :key=\"item.id\" :product=\"item\"></cartItem>\n            <div class=\"cart_total_box\">\n                <h3 class=\"cart_total\">TOTAL</h3>\n                <h3 class=\"cart_total\">$500.00</h3>\n            </div>\n            <a href=\"#\" class=\"button_drop_cart\">Checkout</a>\n            <a href=\"#\" class=\"button_drop_cart\">Go to cart</a>\n         </div>"
+  template: "<div>\n        <div class=\"count_products\" v-if=\"countGoods>0\">\n            <p>{{ countGoods }}</p>\n        </div>\n        <a href=\"shopping-cart.html\" class=\"cart_link\">\n            <img src=\"img/cart.png\" alt=\"cart\" class=\"cart_img\">\n        </a>\n       <div class=\"column_box drop\">\n            <cartItem v-for=\"item of products\" :key=\"item.id\" :product=\"item\"></cartItem>\n            <div class=\"cart_total_box\">\n                <h3 class=\"cart_total\">TOTAL</h3>\n                <h3 class=\"cart_total\">&dollar;{{ amount }}</h3>\n            </div>\n            <button class=\"button_drop_cart\">Checkout</button>\n            <button class=\"button_drop_cart\">Go to cart</button>\n     </div>\n    </div>"
 };
 /* harmony default export */ __webpack_exports__["default"] = (cart);
 
@@ -11275,10 +11309,11 @@ var productItem = {
     return {
       star: Math.trunc(this.product.stars),
       starHalf: 10 * (this.product.stars - Math.trunc(this.product.stars)) !== 0,
-      starO: Math.trunc(5 - this.product.stars)
+      starO: Math.trunc(5 - this.product.stars),
+      cartAPI: this.$root.$refs.cart
     };
   },
-  template: "<div class=\"product\">\n                    <a href=\"single.html\" class=\"product_link\">\n                        <img :src=\"product.img\" alt=\"Some img\" class=\"product_middle_img\">\n                    </a>\n                    <div class=\"product_content\">\n                        <a href=\"single.html\" class=\"product_name_link link_hover\">{{ product.name }}</a>\n                        <div class=\"jc-sb top16\">\n                            <p class=\"product_price\">&dollar; {{ product.price }}</p>\n                            <p>{{product.stars}}</p>\n                            <p class=\"stars\">\n                                <i class=\"fa fa-star\" v-for=\"i in star\"></i>\n                                <i class=\"fa fa-star-half-o\" v-if=\"starHalf\"></i>\n                                <i class=\"fa fa-star-o\" v-for=\"i in starO\"></i>\n                            </p>\n                        </div>\n                    </div>\n                    <div class=\"product_hover\">\n                        <a href=\"#\" class=\"product_add\"><img src=\"img/cart_white.png\" class=\"product_add_img\"\n                                                             alt=\"Add to cart\"> Add to Cart</a>\n                    </div>\n                </div>"
+  template: "<div class=\"product\">\n                    <a href=\"single.html\" class=\"product_link\">\n                        <img :src=\"product.img\" alt=\"Some img\" class=\"product_middle_img\">\n                    </a>\n                    <div class=\"product_content\">\n                        <a href=\"single.html\" class=\"product_name_link link_hover\">{{ product.name }}</a>\n                        <div class=\"jc-sb top16\">\n                            <p class=\"product_price\">&dollar; {{ product.price }}</p>\n                            <p>{{product.stars}}</p>\n                            <p class=\"stars\">\n                                <i class=\"fa fa-star\" v-for=\"i in star\"></i>\n                                <i class=\"fa fa-star-half-o\" v-if=\"starHalf\"></i>\n                                <i class=\"fa fa-star-o\" v-for=\"i in starO\"></i>\n                            </p>\n                        </div>\n                    </div>\n                    <div class=\"product_hover\">\n                        <a href=\"#\" class=\"product_add\" @click=\"cartAPI.addProduct(product)\"><img src=\"img/cart_white.png\" class=\"product_add_img\"\n                                                             alt=\"Add to cart\"> Add to Cart</a>\n                    </div>\n                </div>"
 };
 var products_main = {
   components: {
@@ -11337,6 +11372,32 @@ var app = {
   methods: {
     getJSON: function getJSON(url) {
       return fetch(url).then(function (result) {
+        return result.json();
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    postJSON: function postJSON(url, data) {
+      return fetch(url, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      }).then(function (result) {
+        return result.json();
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    putJSON: function putJSON(url, data) {
+      return fetch(url, {
+        method: 'PUT',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      }).then(function (result) {
         return result.json();
       })["catch"](function (error) {
         console.log(error);

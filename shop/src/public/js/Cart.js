@@ -33,6 +33,12 @@ const cart = {
         }
     },
 
+    methods: {
+      addProduct(product) {
+          console.log(product);
+      }
+    },
+
     mounted() {
         this.$parent.getJSON("/api/cart")
             .then(data => {

@@ -5,6 +5,7 @@ const productItem = {
             star: Math.trunc(this.product.stars),
             starHalf: 10 * (this.product.stars - Math.trunc(this.product.stars)) !== 0,
             starO: Math.trunc(5 - this.product.stars),
+            cartAPI: this.$root.$refs.cart,
         }
     },
     template: `<div class="product">
@@ -24,7 +25,7 @@ const productItem = {
                         </div>
                     </div>
                     <div class="product_hover">
-                        <a href="#" class="product_add"><img src="img/cart_white.png" class="product_add_img"
+                        <a href="#" class="product_add" @click="cartAPI.addProduct(product)"><img src="img/cart_white.png" class="product_add_img"
                                                              alt="Add to cart"> Add to Cart</a>
                     </div>
                 </div>`

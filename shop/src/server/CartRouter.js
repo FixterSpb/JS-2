@@ -1,3 +1,8 @@
+/**
+ * Модуль осуществляет роутинг корзины
+ *
+ */
+
 const express = require('express');
 const fs = require('fs');
 const handler = require('./Handler');

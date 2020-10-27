@@ -473,23 +473,25 @@ h4 {
   text-transform: uppercase; }
 
 .product_hover {
-  margin: 90px 70px;
   position: absolute;
   opacity: 0;
-  /*display: none;*/
+  display: none;
   left: 0;
   top: 0;
-  flex-wrap: wrap;
-  justify-content: space-between; }
+  height: 75%;
+  width: 100%;
+  padding-bottom: 5%;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center; }
 
 .product_add {
-  /* display: none; */
   display: flex;
-  /* position: absolute; */
   align-items: center;
   justify-content: center;
   padding: 10px 10px;
   border: 1px solid #ffffff;
+  background-color: transparent;
   border-radius: 3px;
   font-size: 13px;
   font-weight: bold;
@@ -1481,3 +1483,5 @@ select option {
 
 .txt-17 {
   font-size: 17px; }
+
+/*# sourceMappingURL=style.css.map */

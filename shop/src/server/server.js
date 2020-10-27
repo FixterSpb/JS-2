@@ -4,9 +4,14 @@ const app = express();
 const path = require("path");
 const cartRouter = require("./CartRouter");
 
+
+/**
+ * Модуль обрабатывает запросы на сервер
+ */
 app.use(express.json());
 app.use('/', express.static(path.resolve(__dirname, '../public')));
 app.use('/api/cart', cartRouter);
+app.use('/single.html', express.static(path.resolve(__dirname, '../public/single.html')));
 
 app.get('/api/products_main', (req, res) => {
     fs.readFile(path.resolve(__dirname, './db/products_main.json'), 'utf-8', (err, data) => {

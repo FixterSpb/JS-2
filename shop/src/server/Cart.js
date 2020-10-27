@@ -1,4 +1,5 @@
 const add = (cart, req) => {
+    console.dir(cart);
     cart.products.push(req.body);
     console.log(cart.countGoods);
     cart.countGoods = cart.products.length;
@@ -13,6 +14,7 @@ const add = (cart, req) => {
 };
 
 const change = (cart, req) => {
+    console.dir(cart);
     const find = cart.products.find(el => el.id === +req.params.id);
     find.quantity += req.body.quantity;
     return { name: find.name, newCart: JSON.stringify(cart, null, 4) };
@@ -25,8 +27,9 @@ const change = (cart, req) => {
  * @returns {{newCart: *, name: *}}
  */
 const remove = (cart, req) => {
-    const find = cart.find(el => el.id_product === +req.params.id);
-    cart.splice(cart.indexOf(find), 1);
+    console.log(req.params.id);
+    const find = cart.products.find(el => el.id === +req.params.id);
+    cart.products.splice(cart.products.indexOf(find), 1);
     return { name: find.name, newCart: JSON.stringify(cart, null, 4) };
 };
 

@@ -21,7 +21,8 @@ const cartItem = {
                     <i class="fa fa-star-o" v-for="i in starO"></i>
                 <p class="cart_count"> {{ product.quantity }} X &dollar;{{ product.price }}</p>
             </div>
-            <a href="#" class="cart_delete" @click="$emit('remove', cartItem)"><i class="fa fa-times-circle"></i></a>
+            <a href="#" class="cart_delete" @click.prevent="$parent.deleteProduct(product)"><i class="fa fa-times-circle"></i></a>
+<!--            $emit('remove', product)-->
         </div>`
 };
 
@@ -36,37 +37,46 @@ const cart = {
     },
 
     methods: {
+        update(){
+            this.$parent.getJSON("/api/cart")
+                .then(data => {
+                    this.amount = data.amount;
+                    this.countGoods = data.countGoods;
+                    this.products = [];
+                    for (let item of data.products){
+                        this.products.push(item);
+                    }
+                })
+        },
         addProduct(product) {
             console.log(product);
             let find = this.products.find(el => el.id === product.id);
             if (find){
                 this.$parent.putJSON(`api/cart/${find.id}`, {quantity: 1});
-                find.quantity++;
             }else{
                 let prod = Object.assign({quantity: 1}, product);
-                this.$parent.postJSON(`api/cart/`, prod)
-                    .then(data => {
-                        if (data.result === 1){
-                            this.$parent.getJSON("/api/cart");
-                        }
-                    });
+                this.$parent.postJSON(`api/cart/`, prod);
             };
+            this.update();
         },
 
         deleteProduct(product){
-
+            console.log("deleteProduct");
+            let find = this.products.find(el => el.id === product.id);
+            if (!find){
+                return;
+            }
+            if (product.quantity === 1){
+                this.$parent.deleteJSON(`api/cart/${product.id}`, product);
+            }else{
+                this.$parent.putJSON(`api/cart/${product.id}`, {quantity: -1});
+            }
+            this.update();
         }
     },
 
     mounted() {
-        this.$parent.getJSON("/api/cart")
-            .then(data => {
-                this.amount = data.amount;
-                this.countGoods = data.countGoods;
-                for (let item of data.products){
-                    this.products.push(item);
-                }
-            })
+        this.update()
     },
 
     template:

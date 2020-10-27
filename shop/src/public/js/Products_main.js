@@ -8,15 +8,17 @@ const productItem = {
             cartAPI: this.$root.$refs.cart,
         }
     },
+    methods:{
+        toSingle(){
+            window.location.href = `single.html`;///?id=${ this.product.id }`;
+        }
+    },
     template: `<div class="product">
-                    <a href="single.html" class="product_link">
-                        <img :src="product.img" alt="Some img" class="product_middle_img">
-                    </a>
+                    <img :src="product.img" alt="Some img" class="product_middle_img">
                     <div class="product_content">
                         <a href="single.html" class="product_name_link link_hover">{{ product.name }}</a>
                         <div class="jc-sb top16">
                             <p class="product_price">&dollar; {{ product.price }}</p>
-                            <p>{{product.stars}}</p>
                             <p class="stars">
                                 <i class="fa fa-star" v-for="i in star"></i>
                                 <i class="fa fa-star-half-o" v-if="starHalf"></i>
@@ -24,9 +26,9 @@ const productItem = {
                             </p>
                         </div>
                     </div>
-                    <div class="product_hover">
-                        <a href="#" class="product_add" @click="cartAPI.addProduct(product)"><img src="img/cart_white.png" class="product_add_img"
-                                                             alt="Add to cart"> Add to Cart</a>
+                    <div class="product_hover" @click="toSingle()">
+                        <button class="product_add" v-on:click.stop="cartAPI.addProduct(product)"><img src="img/cart_white.png" class="product_add_img"
+                                                             alt="Add to cart"> Add to Cart</button>
                     </div>
                 </div>`
 };
@@ -46,7 +48,8 @@ const products_main = {
                 for (let item of data){
                     this.products.push(item);
                 }
-            })
+            });
+        console.dir(this);
     },
 
     template: ` <section class="products center">

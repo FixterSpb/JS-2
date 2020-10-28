@@ -11231,31 +11231,28 @@ var cart = {
     };
   },
   methods: {
-    update: function update() {
-      var _this = this;
+    update: function update(data) {
+      this.amount = data.amount;
+      this.countGoods = data.countGoods;
+      this.products = [];
 
-      this.$parent.getJSON("/api/cart").then(function (data) {
-        _this.amount = data.amount;
-        _this.countGoods = data.countGoods;
-        _this.products = [];
+      var _iterator = _createForOfIteratorHelper(data.products),
+          _step;
 
-        var _iterator = _createForOfIteratorHelper(data.products),
-            _step;
-
-        try {
-          for (_iterator.s(); !(_step = _iterator.n()).done;) {
-            var item = _step.value;
-
-            _this.products.push(item);
-          }
-        } catch (err) {
-          _iterator.e(err);
-        } finally {
-          _iterator.f();
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var item = _step.value;
+          this.products.push(item);
         }
-      });
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
     },
     addProduct: function addProduct(product) {
+      var _this = this;
+
       console.log(product);
       var find = this.products.find(function (el) {
         return el.id === product.id;
@@ -11264,18 +11261,27 @@ var cart = {
       if (find) {
         this.$parent.putJSON("api/cart/".concat(find.id), {
           quantity: 1
+        }).then(function (data) {
+          return _this.update(data);
         });
       } else {
         var prod = Object.assign({
           quantity: 1
         }, product);
-        this.$parent.postJSON("api/cart/", prod);
+        this.$parent.postJSON("api/cart/", prod).then(function (data) {
+          console.log("public/cart addproduct -> post: ");
+          console.log("data: ");
+          console.dir(data);
+
+          _this.update(data);
+        });
       }
 
-      ;
-      this.update();
+      ; //this.update();
     },
     deleteProduct: function deleteProduct(product) {
+      var _this2 = this;
+
       console.log("deleteProduct");
       var find = this.products.find(function (el) {
         return el.id === product.id;
@@ -11286,20 +11292,26 @@ var cart = {
       }
 
       if (product.quantity === 1) {
-        this.$parent.deleteJSON("api/cart/".concat(product.id), product);
+        this.$parent.deleteJSON("api/cart/".concat(product.id), product).then(function (data) {
+          return _this2.update(data);
+        });
       } else {
         this.$parent.putJSON("api/cart/".concat(product.id), {
           quantity: -1
+        }).then(function (data) {
+          return _this2.update(data);
         });
       }
-
-      this.update();
     }
   },
   mounted: function mounted() {
-    this.update();
+    var _this3 = this;
+
+    this.$parent.getJSON("/api/cart").then(function (data) {
+      return _this3.update(data);
+    });
   },
-  template: "<div>\n        <div class=\"count_products\" v-if=\"countGoods>0\">\n            <p>{{ countGoods }}</p>\n        </div>\n        <a href=\"shopping-cart.html\" class=\"cart_link\">\n            <img src=\"img/cart.png\" alt=\"cart\" class=\"cart_img\">\n        </a>\n       <div class=\"column_box drop\">\n            <cartItem v-for=\"item of products\" :key=\"item.id\" :product=\"item\"></cartItem>\n            <div class=\"cart_total_box\">\n                <h3 class=\"cart_total\">TOTAL</h3>\n                <h3 class=\"cart_total\">&dollar;{{ amount }}</h3>\n            </div>\n            <button class=\"button_drop_cart\">Checkout</button>\n            <button class=\"button_drop_cart\">Go to cart</button>\n     </div>\n    </div>"
+  template: "<div>\n        <div class=\"count_products\" v-if=\"countGoods>0\">\n            <p>{{ countGoods }}</p>\n        </div>\n        <a href=\"shopping-cart.html\" class=\"cart_link\">\n            <img src=\"img/cart.png\" alt=\"cart\" class=\"cart_img\">\n        </a>\n        <div class=\"column_box drop\">\n            <cartItem v-for=\"item of products\" :key=\"item.id\" :product=\"item\"></cartItem>\n            <div class=\"cart_total_box\" v-if=\"countGoods > 0\">\n                <h3 class=\"cart_total\">TOTAL</h3>\n                <h3 class=\"cart_total\">&dollar;{{ amount }}</h3>\n            </div>\n            <div v-else>\n                <h3 class=\"cart_total\" style=\"font-style: italic; font-weight: normal; text-align: center\">Cart is empty</h3>\n            </div>\n            <button class=\"button_drop_cart\">Checkout</button>\n            <button class=\"button_drop_cart\">Go to cart</button>\n        </div>\n    </div>"
 };
 /* harmony default export */ __webpack_exports__["default"] = (cart);
 

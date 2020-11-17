@@ -1,4 +1,4 @@
-const product = {
+const productItem = {
     props: ['product'],
     data() {
         return {
@@ -19,6 +19,32 @@ const product = {
     },
 
     template: `<div class="product">
+                    <img :src="product.img" alt="Some img" class="product_middle_img">
+
+                    <div class="product_content">
+                        <a href="single.html" class="product_name_link link_hover">{{ product.name }}</a>
+                        <div class="jc-sb top16">
+                            <p class="product_price">&dollar; {{ product.price }}</p>
+                            <p class="stars">
+                                <i class="fa fa-star" v-for="i in star"></i>
+                                <i class="fa fa-star-half-o" v-if="starHalf"></i>
+                                <i class="fa fa-star-o" v-for="i in starO"></i>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="product_hover flex-col">
+                        <a href="#" class="product_add"><img src="img/cart_white.png" class="product_add_img"
+                                alt="Add to cart"> Add to Cart</a>
+                        <div class="flex flex-row">
+                            <a href="#" class="product_add product_add-min"><i class="fa fa-retweet fs-18"
+                                    aria-hidden="true"></i></a>
+                            <a href="#" class="product_add product_add-min"><i class="fa fa-heart-o fs-18"
+                                    aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>`
+        /*
+<div class="product">
                     <a href="single.html" class="product_link">
                         <img :src="product.img" alt="Some img" class="product_middle_img">
                     </a>
@@ -38,7 +64,7 @@ const product = {
                         <a href="#" class="product_add"><img src="img/cart_white.png" class="product_add_img"
                                                              alt="Add to cart"> Add to Cart</a>
                     </div>
-                </div>`
+                </div>`*/
 };
 
 const products = {

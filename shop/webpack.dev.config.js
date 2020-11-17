@@ -63,6 +63,11 @@ module.exports = {
             filename: 'single.html',
             excludeChunks: ['server']
         }),
+        new HtmlWebpackPlugin({
+            template: 'src/public/product.html',
+            filename: 'product.html',
+            excludeChunks: ['server']
+        }),
         new CopyPlugin([
             {
                 from: "src/public/img",

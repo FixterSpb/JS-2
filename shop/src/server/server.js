@@ -11,7 +11,7 @@ const cartRouter = require("./CartRouter");
 app.use(express.json());
 app.use('/', express.static(path.resolve(__dirname, '../public')));
 app.use('/api/cart', cartRouter);
-app.use('/single.html', express.static(path.resolve(__dirname, '../public/single.html')));
+app.get('/single.html', express.static(path.resolve(__dirname, '../public/single.html')));
 
 app.get('/api/products_main', (req, res) => {
     fs.readFile(path.resolve(__dirname, './db/products_main.json'), 'utf-8', (err, data) => {

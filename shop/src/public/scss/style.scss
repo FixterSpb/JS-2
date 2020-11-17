@@ -620,7 +620,14 @@ h4 {
         font-weight: bold;
         color: $color_bgrd;
         margin-top: 8px;
-        min-width: 57px;
+        width: 124px;
+        height: 39px;
+
+        &-min{
+            width: 57px;
+            margin: 8px 4px;
+        }
+
     }
 
     .product_add_img {
@@ -1525,6 +1532,18 @@ h4 {
 
     #c_black {
         background-color: $colorText_default;
+    }
+
+    .flex{
+        display: flex;
+
+        &-col{
+            flex-direction: column;
+        }
+
+        &-row{
+            flex-direction: row;
+        }
     }
 
     @import 'shopping-cart';

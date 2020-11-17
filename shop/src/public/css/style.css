@@ -497,7 +497,11 @@ h4 {
   font-weight: bold;
   color: #ffffff;
   margin-top: 8px;
-  min-width: 57px; }
+  width: 124px;
+  height: 39px; }
+  .product_add-min {
+    width: 57px;
+    margin: 8px 4px; }
 
 .product_add_img {
   margin-right: 8px; }
@@ -1237,6 +1241,13 @@ select option {
 
 #c_black {
   background-color: #222222; }
+
+.flex {
+  display: flex; }
+  .flex-col {
+    flex-direction: column; }
+  .flex-row {
+    flex-direction: row; }
 
 .shopping-cart {
   margin: 85px 0; }
